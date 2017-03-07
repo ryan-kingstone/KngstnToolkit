@@ -18,26 +18,42 @@ namespace RenameUtil
 
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.ShowDialog();
-            Console.WriteLine(dialog.SelectedPath);
+            RenameFiles(dialog.SelectedPath);
             Console.ReadLine();
         }
 
-        public void RenameFiles(string path)
+        public static void RenameFiles(string path)
         {
             try
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(path);
+
+                var folders = System.IO.Directory.EnumerateDirectories(path);
+
+                foreach (var folder in folders)
+                {
+                    RenameFiles(folder);
+                }
+
                 var files = System.IO.Directory.EnumerateFiles(path);
 
                 int counter = 0;
 
-                foreach(var file in files)
+                Console.ForegroundColor = ConsoleColor.White;
+
+                foreach (var file in files)
                 {
-                    Console.WriteLine("File: {file} - renaming.");
+                    Console.WriteLine($"---------> {file}.");
 
                     counter++;
                 }
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"{counter} files renamed.");
+                MessageBox.Show($"{counter} files renamed.");
             } catch (Exception ex)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(ex);
             }
 
