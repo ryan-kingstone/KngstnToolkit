@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace RenameUtil
 {
     class Program
     {
+        public static int RenamedFileCounter = 0;
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -18,7 +21,15 @@ namespace RenameUtil
 
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.ShowDialog();
-            RenameFiles(dialog.SelectedPath);
+            if (dialog.SelectedPath != "")
+            {
+                RenameFiles(dialog.SelectedPath);
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{RenamedFileCounter} files renamed.");
+            MessageBox.Show($"{RenamedFileCounter} files renamed.");
+
             Console.ReadLine();
         }
 
@@ -29,34 +40,71 @@ namespace RenameUtil
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(path);
 
-                var folders = System.IO.Directory.EnumerateDirectories(path);
+                var folders = Directory.EnumerateDirectories(path);
 
                 foreach (var folder in folders)
                 {
                     RenameFiles(folder);
                 }
 
-                var files = System.IO.Directory.EnumerateFiles(path);
-
-                int counter = 0;
+                var files = Directory.EnumerateFiles(path);
 
                 Console.ForegroundColor = ConsoleColor.White;
 
                 foreach (var file in files)
                 {
                     Console.WriteLine($"---------> {file}.");
+                    if (File.Exists(file))
+                    {
+                        var extension = Path.GetExtension(file);
+                        if (extension != null)
+                        {
+                            var originalFileName = Path.GetFileName(file);
 
-                    counter++;
+                            if (IsImageOrVideoFile(file))
+                            {
+                                var creationTime = File.GetCreationTime(file);
+                                var newName = Path.GetPathRoot(file) + $"MEDIA_{creationTime.Day}-{creationTime.Month}-{creationTime.Day}-T{creationTime.Hour}-{creationTime.Minute}{extension}";
+                                if (!File.Exists(newName))
+                                {
+                                    File.Move(file, newName);
+                                    Console.WriteLine($"------ Renaming to {newName}");
+                                }
+                            } else
+                            {
+                                Console.WriteLine($"---- Skipping {file}.");
+                            }
+                        } else
+                        {
+                            Console.WriteLine($"ERROR - File {file} did not have extension information");
+                        }
+                    }
+
+                    RenamedFileCounter++;
                 }
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"{counter} files renamed.");
-                MessageBox.Show($"{counter} files renamed.");
             } catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(ex);
             }
 
+        }
+
+        public static bool IsImageOrVideoFile(string path)
+        {
+            if (File.Exists(path))
+            {
+                var imageFileTypes = new[] { ".jpg", ".jpeg", ".png", ".gif", ".mp4" };
+
+                var extension = Path.GetExtension(path);
+
+                if (imageFileTypes.Contains<string>(extension.ToLower()))
+                {
+                    return true;
+                }
+                else return false;
+            }
+            else throw new System.IO.FileNotFoundException($"Unable to handle file at path [{path}] since it's missing.");
         }
     }
 }
