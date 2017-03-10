@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using MusicAggregate.Lib.Providers;
 
 namespace MusicAggregate.Lib
 {
     public class AggregateEngine
     {
-        private List<ISearchProvider> Providers;
+        private readonly List<ISearchProvider> _providers;
 
         public AggregateEngine()
         {
-            Providers = new List<ISearchProvider>();
+            _providers = new List<ISearchProvider>
+            {
+                new SoundcloudProvider()
+            };
+
         }
 
         public Dictionary<ISearchProvider, List<string>> Search(string query)
         {
             Dictionary<ISearchProvider, List<string>> results = new Dictionary<ISearchProvider, List<string>>();
 
-            foreach(var provider in Providers)
+            foreach(var provider in _providers)
             {
                 var result = provider.Search(query);
                 results.Add(provider, result);
