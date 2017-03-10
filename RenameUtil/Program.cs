@@ -24,11 +24,11 @@ namespace RenameUtil
             if (dialog.SelectedPath != "")
             {
                 RenameFiles(dialog.SelectedPath);
-            }
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"{RenamedFileCounter} files renamed.");
-            MessageBox.Show($"{RenamedFileCounter} files renamed.");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"{RenamedFileCounter} files renamed.");
+                MessageBox.Show($"{RenamedFileCounter} files renamed.");
+            } else Console.WriteLine("No folder selected.");
 
             Console.ReadLine();
         }
@@ -64,12 +64,14 @@ namespace RenameUtil
                             if (IsImageOrVideoFile(file))
                             {
                                 var creationTime = File.GetCreationTime(file);
-                                var newName = Path.GetPathRoot(file) + $"MEDIA_{creationTime.Day}-{creationTime.Month}-{creationTime.Day}-T{creationTime.Hour}-{creationTime.Minute}{extension}";
+                                var newName = Path.GetDirectoryName(file) + "\\" + $"MEDIA_{creationTime.Day.ToString().PadLeft(2, '0')}-{creationTime.Month.ToString().PadLeft(2, '0')}-{creationTime.Year.ToString().PadLeft(2, '0')}_{creationTime.Hour.ToString().PadLeft(2, '0')}-{creationTime.Minute.ToString().PadLeft(2, '0')}-{RandomString(4)}{extension}";
                                 if (!File.Exists(newName))
                                 {
                                     File.Move(file, newName);
-                                    Console.WriteLine($"------ Renaming to {newName}");
-                                }
+                                    Console.WriteLine($"------ Renaming ({file}) to {newName}");
+
+                                    RenamedFileCounter++;
+                                } else Console.WriteLine($"File (old: {file}) {newName} exists already.");
                             } else
                             {
                                 Console.WriteLine($"---- Skipping {file}.");
@@ -78,9 +80,7 @@ namespace RenameUtil
                         {
                             Console.WriteLine($"ERROR - File {file} did not have extension information");
                         }
-                    }
-
-                    RenamedFileCounter++;
+                    } else Console.WriteLine($"ERROR - File exists at {file}.");
                 }
             } catch (Exception ex)
             {
@@ -97,14 +97,26 @@ namespace RenameUtil
                 var imageFileTypes = new[] { ".jpg", ".jpeg", ".png", ".gif", ".mp4" };
 
                 var extension = Path.GetExtension(path);
-
-                if (imageFileTypes.Contains<string>(extension.ToLower()))
+                if (extension != null)
                 {
-                    return true;
+                    if (imageFileTypes.Contains(extension.ToLower()))
+                    {
+                        return true;
+                    }
+                    return false;
                 }
-                else return false;
+                return false;
             }
             else throw new System.IO.FileNotFoundException($"Unable to handle file at path [{path}] since it's missing.");
+        }
+
+        public static string RandomString(int length)
+        {
+            var random = new Random(DateTime.Now.GetHashCode());
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }
