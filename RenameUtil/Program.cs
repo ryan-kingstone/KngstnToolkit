@@ -15,7 +15,8 @@ namespace RenameUtil
         [STAThread]
         static void Main(string[] args)
         {
-            Console.Title = typeof(Program).Namespace;
+            var title = typeof(Program).Namespace;
+            if (title != null) Console.Title = title;
 
             Console.WriteLine("Select the folder you wish to run the RenameUtil tool on.");
 
@@ -63,15 +64,24 @@ namespace RenameUtil
 
                             if (IsImageOrVideoFile(file))
                             {
-                                var creationTime = File.GetCreationTime(file);
-                                var newName = Path.GetDirectoryName(file) + "\\" + $"MEDIA_{creationTime.Day.ToString().PadLeft(2, '0')}-{creationTime.Month.ToString().PadLeft(2, '0')}-{creationTime.Year.ToString().PadLeft(2, '0')}_{creationTime.Hour.ToString().PadLeft(2, '0')}-{creationTime.Minute.ToString().PadLeft(2, '0')}-{RandomString(4)}{extension}";
-                                if (!File.Exists(newName))
+                                if (originalFileName != null && !originalFileName.StartsWith("MEDIA"))
                                 {
-                                    File.Move(file, newName);
-                                    Console.WriteLine($"------ Renaming ({file}) to {newName}");
+                                    var creationTime = File.GetCreationTime(file);
+                                    var newName = Path.GetDirectoryName(file) + "\\" +
+                                                  $"MEDIA_{creationTime.Day.ToString().PadLeft(2, '0')}-{creationTime.Month.ToString().PadLeft(2, '0')}-{creationTime.Year.ToString().PadLeft(2, '0')}_{creationTime.Hour.ToString().PadLeft(2, '0')}-{creationTime.Minute.ToString().PadLeft(2, '0')}-{RandomString(4)}{extension}";
+                                    if (!File.Exists(newName))
+                                    {
+                                        File.Move(file, newName);
+                                        Console.WriteLine($"------ Renaming ({file}) to {newName}");
 
-                                    RenamedFileCounter++;
-                                } else Console.WriteLine($"File (old: {file}) {newName} exists already.");
+                                        RenamedFileCounter++;
+                                    }
+                                    else Console.WriteLine($"File (old: {file}) {newName} exists already.");
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Skipping {file} since it seems to follow the format already.");
+                                }
                             } else
                             {
                                 Console.WriteLine($"---- Skipping {file}.");
@@ -107,7 +117,7 @@ namespace RenameUtil
                 }
                 return false;
             }
-            else throw new System.IO.FileNotFoundException($"Unable to handle file at path [{path}] since it's missing.");
+            else throw new FileNotFoundException($"Unable to handle file at path [{path}] since it's missing.");
         }
 
         public static string RandomString(int length)
