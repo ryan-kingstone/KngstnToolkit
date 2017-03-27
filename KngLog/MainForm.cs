@@ -101,19 +101,23 @@ namespace KngLog
 
         private void LoadData()
         {
-            var fileContent = File.ReadAllText("knglogdb.json");
-            if(fileContent.Length > 1)
-            {
-                var list = JsonConvert.DeserializeObject<List<LogEntry>>(fileContent);
-                
-                foreach(var entry in list)
-                {
-                    _logEntries.Add(entry);
-                }
 
-                // update the grid view
-                UpdateGridview();
-            }
+            if (File.Exists("knglogdb.json"))
+            {
+                var fileContent = File.ReadAllText("knglogdb.json");
+                if (fileContent.Length > 1)
+                {
+                    var list = JsonConvert.DeserializeObject<List<LogEntry>>(fileContent);
+
+                    foreach (var entry in list)
+                    {
+                        _logEntries.Add(entry);
+                    }
+
+                    // update the grid view
+                    UpdateGridview();
+                }
+            } else SaveData();
         }
 
         private void logGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)

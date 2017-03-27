@@ -32,9 +32,9 @@
             this.submitButton = new System.Windows.Forms.Button();
             this.characterCounterLabel = new System.Windows.Forms.Label();
             this.logGridView = new System.Windows.Forms.DataGridView();
-            this.entryCounterLabel = new System.Windows.Forms.Label();
             this.Entry = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.entryCounterLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.logGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,19 +81,10 @@
             this.logGridView.Location = new System.Drawing.Point(13, 176);
             this.logGridView.Name = "logGridView";
             this.logGridView.ReadOnly = true;
-            this.logGridView.Size = new System.Drawing.Size(656, 179);
+            this.logGridView.Size = new System.Drawing.Size(656, 289);
             this.logGridView.TabIndex = 3;
-            this.logGridView.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.logGridView_UserDeletedRow);
             this.logGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.logGridView_CellContentClick);
-            // 
-            // entryCounterLabel
-            // 
-            this.entryCounterLabel.AutoSize = true;
-            this.entryCounterLabel.Location = new System.Drawing.Point(13, 157);
-            this.entryCounterLabel.Name = "entryCounterLabel";
-            this.entryCounterLabel.Size = new System.Drawing.Size(46, 13);
-            this.entryCounterLabel.TabIndex = 4;
-            this.entryCounterLabel.Text = "x entries";
+            this.logGridView.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.logGridView_UserDeletedRow);
             // 
             // Entry
             // 
@@ -109,11 +100,20 @@
             this.Date.ReadOnly = true;
             this.Date.Width = 120;
             // 
+            // entryCounterLabel
+            // 
+            this.entryCounterLabel.AutoSize = true;
+            this.entryCounterLabel.Location = new System.Drawing.Point(13, 157);
+            this.entryCounterLabel.Name = "entryCounterLabel";
+            this.entryCounterLabel.Size = new System.Drawing.Size(46, 13);
+            this.entryCounterLabel.TabIndex = 4;
+            this.entryCounterLabel.Text = "x entries";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(681, 367);
+            this.ClientSize = new System.Drawing.Size(681, 477);
             this.Controls.Add(this.entryCounterLabel);
             this.Controls.Add(this.logGridView);
             this.Controls.Add(this.characterCounterLabel);
