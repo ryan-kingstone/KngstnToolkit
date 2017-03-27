@@ -83,6 +83,8 @@
             this.logGridView.ReadOnly = true;
             this.logGridView.Size = new System.Drawing.Size(656, 179);
             this.logGridView.TabIndex = 3;
+            this.logGridView.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.logGridView_UserDeletedRow);
+            this.logGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.logGridView_CellContentClick);
             // 
             // entryCounterLabel
             // 
@@ -98,7 +100,6 @@
             this.Entry.HeaderText = "Entry Text";
             this.Entry.Name = "Entry";
             this.Entry.ReadOnly = true;
-            this.Entry.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.Entry.Width = 490;
             // 
             // Date
@@ -106,7 +107,6 @@
             this.Date.HeaderText = "Last modified";
             this.Date.Name = "Date";
             this.Date.ReadOnly = true;
-            this.Date.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.Date.Width = 120;
             // 
             // MainForm

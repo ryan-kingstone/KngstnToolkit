@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Windows.Forms;
 
 namespace KngLog
@@ -30,12 +32,15 @@ namespace KngLog
 
             // disable last blank row
             logGridView.AllowUserToAddRows = false;
+            logGridView.AllowUserToDeleteRows = true;
 
             // bind the data source
             //logGridView.DataSource = _logEntries;
 
             // initialize the entry counter text.
             entryCounterLabel.Text = "0 entries";
+
+            LoadData();
         }
 
         private void logTextBox_TextChanged(object sender, EventArgs e)
@@ -64,7 +69,10 @@ namespace KngLog
 
             // reset the textbox
             logTextBox.Text = "";
-            
+
+            // save the data to the file
+            SaveData();
+
             // update the gridview
             UpdateGridview();
         }
@@ -83,6 +91,49 @@ namespace KngLog
 
             // update the counter
             entryCounterLabel.Text = $"{logGridView.Rows.Count} entries";
+        }
+
+        private void SaveData()
+        {
+            var json = JsonConvert.SerializeObject(_logEntries);
+            File.WriteAllText("knglogdb.json", json);
+        }
+
+        private void LoadData()
+        {
+            var fileContent = File.ReadAllText("knglogdb.json");
+            if(fileContent.Length > 1)
+            {
+                var list = JsonConvert.DeserializeObject<List<LogEntry>>(fileContent);
+                
+                foreach(var entry in list)
+                {
+                    _logEntries.Add(entry);
+                }
+
+                // update the grid view
+                UpdateGridview();
+            }
+        }
+
+        private void logGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void logGridView_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
+        {
+            if (logGridView.SelectedCells.Count > 0)
+            {
+                int selectedrowindex = logGridView.SelectedCells[0].RowIndex;
+
+                DataGridViewRow selectedRow = logGridView.Rows[selectedrowindex];
+
+                string a = Convert.ToString(selectedRow.Cells[0].Value);
+                string b = Convert.ToString(selectedRow.Cells[1].Value);
+                System.Diagnostics.Debug.WriteLine($"A string rel {a} {b}");
+
+            }
         }
     }
 }
