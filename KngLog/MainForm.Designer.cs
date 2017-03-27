@@ -31,11 +31,10 @@
             this.logTextBox = new System.Windows.Forms.TextBox();
             this.submitButton = new System.Windows.Forms.Button();
             this.characterCounterLabel = new System.Windows.Forms.Label();
-            this.logGridView = new System.Windows.Forms.DataGridView();
-            this.Entry = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.entryCounterLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.logGridView)).BeginInit();
+            this.entryGroupBox = new System.Windows.Forms.GroupBox();
+            this.EntryPanel = new System.Windows.Forms.Panel();
+            this.entryGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // logTextBox
@@ -71,35 +70,6 @@
             this.characterCounterLabel.Text = "xxx/xxx";
             this.characterCounterLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // logGridView
-            // 
-            this.logGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            this.logGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.logGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Entry,
-            this.Date});
-            this.logGridView.Location = new System.Drawing.Point(13, 176);
-            this.logGridView.Name = "logGridView";
-            this.logGridView.ReadOnly = true;
-            this.logGridView.Size = new System.Drawing.Size(656, 289);
-            this.logGridView.TabIndex = 3;
-            this.logGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.logGridView_CellContentClick);
-            this.logGridView.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.logGridView_UserDeletedRow);
-            // 
-            // Entry
-            // 
-            this.Entry.HeaderText = "Entry Text";
-            this.Entry.Name = "Entry";
-            this.Entry.ReadOnly = true;
-            this.Entry.Width = 490;
-            // 
-            // Date
-            // 
-            this.Date.HeaderText = "Last modified";
-            this.Date.Name = "Date";
-            this.Date.ReadOnly = true;
-            this.Date.Width = 120;
-            // 
             // entryCounterLabel
             // 
             this.entryCounterLabel.AutoSize = true;
@@ -109,20 +79,40 @@
             this.entryCounterLabel.TabIndex = 4;
             this.entryCounterLabel.Text = "x entries";
             // 
+            // entryGroupBox
+            // 
+            this.entryGroupBox.BackColor = System.Drawing.SystemColors.Control;
+            this.entryGroupBox.Controls.Add(this.EntryPanel);
+            this.entryGroupBox.Location = new System.Drawing.Point(12, 173);
+            this.entryGroupBox.Name = "entryGroupBox";
+            this.entryGroupBox.Size = new System.Drawing.Size(657, 292);
+            this.entryGroupBox.TabIndex = 5;
+            this.entryGroupBox.TabStop = false;
+            this.entryGroupBox.Text = "Log";
+            // 
+            // EntryPanel
+            // 
+            this.EntryPanel.AutoScroll = true;
+            this.EntryPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.EntryPanel.Location = new System.Drawing.Point(6, 19);
+            this.EntryPanel.Name = "EntryPanel";
+            this.EntryPanel.Size = new System.Drawing.Size(645, 267);
+            this.EntryPanel.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(681, 477);
+            this.Controls.Add(this.entryGroupBox);
             this.Controls.Add(this.entryCounterLabel);
-            this.Controls.Add(this.logGridView);
             this.Controls.Add(this.characterCounterLabel);
             this.Controls.Add(this.submitButton);
             this.Controls.Add(this.logTextBox);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "KngLog";
-            ((System.ComponentModel.ISupportInitialize)(this.logGridView)).EndInit();
+            this.entryGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,10 +123,9 @@
         private System.Windows.Forms.TextBox logTextBox;
         private System.Windows.Forms.Button submitButton;
         private System.Windows.Forms.Label characterCounterLabel;
-        private System.Windows.Forms.DataGridView logGridView;
         private System.Windows.Forms.Label entryCounterLabel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Entry;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Date;
+        private System.Windows.Forms.GroupBox entryGroupBox;
+        private System.Windows.Forms.Panel EntryPanel;
     }
 }
 

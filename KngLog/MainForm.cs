@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -9,17 +11,22 @@ namespace KngLog
 {
     public partial class MainForm : Form
     {
+        public static string FilePath = "knglogdb.json";
+
         // the max character list
         public static int MaxCharacters = 300;
 
         private static List<LogEntry> _logEntries;
 
+        private List<Control> _controls;
+
         public MainForm()
         {
             InitializeComponent();
 
-            // initialize the list
+            // initialize the lists
             _logEntries = new List<LogEntry>();
+            _controls = new List<Control>();
 
             // set the maximum length
             logTextBox.MaxLength = MaxCharacters;
@@ -27,18 +34,8 @@ namespace KngLog
             // intialize the character counter
             characterCounterLabel.Text = $"{logTextBox.Text.Length}/{MaxCharacters}";
 
-            // set auto size mode
-            logGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-
-            // disable last blank row
-            logGridView.AllowUserToAddRows = false;
-            logGridView.AllowUserToDeleteRows = true;
-
-            // bind the data source
-            //logGridView.DataSource = _logEntries;
-
             // initialize the entry counter text.
-            entryCounterLabel.Text = "0 entries";
+            entryCounterLabel.Text = @"0 entries";
 
             LoadData();
         }
@@ -61,7 +58,7 @@ namespace KngLog
             var logEntry = new LogEntry()
             {
                 Entry = logTextBox.Text,
-                Date = DateTime.Now.ToString()
+                Date = DateTime.Now.ToString(CultureInfo.CurrentCulture)
             };
 
             // add the entry
@@ -71,7 +68,7 @@ namespace KngLog
             logTextBox.Text = "";
 
             // save the data to the file
-            SaveData();
+            SaveData(_logEntries);
 
             // update the gridview
             UpdateGridview();
@@ -79,32 +76,56 @@ namespace KngLog
 
         private void UpdateGridview()
         {
-            // clear the view
-            logGridView.Rows.Clear();
-            
-            // add each item
-            foreach(var item in _logEntries)
+            foreach (var item in _logEntries)
             {
-                string[] row = { item.Entry, item.Date };
-                logGridView.Rows.Add(row);
+                Panel pan = new Panel();
+                pan.Location = new Point(5, 2 + EntryPanel.Controls.Count * 110);
+                pan.BackColor = Color.OliveDrab;
+                pan.Width = EntryPanel.Width - 22;
+                pan.Height = 100;
+                EntryPanel.Controls.Add(pan);
+
+                Label chb = new Label();
+                chb.Text = item.Entry;
+                chb.Width = EntryPanel.Width - 22;
+                chb.Height = 75;
+                chb.Font = new Font("Segoe UI", 8.2f);
+                chb.Location = new Point(0, pan.Controls.Count * 60);
+                pan.Controls.Add(chb);
+
+                Label dateLabel = new Label();
+                dateLabel.Text = item.Date;
+                dateLabel.Width = EntryPanel.Width - 22;
+                dateLabel.Height = 12;
+                dateLabel.Font = new Font("Segoe UI", 8.2f);
+                dateLabel.Location = new Point(0, pan.Controls.Count * 60 + 25);
+                pan.Controls.Add(dateLabel);
+
+                /*Button button = new Button();
+                button.Text = "DELETE";
+                button.Width = 60;
+                button.Height = 12;
+                button.Font = new Font("Segoe UI", 8.2f);
+                button.Location = new Point(50, pan.Controls.Count * 60 + 25);
+                pan.Controls.Add(button);*/
             }
 
             // update the counter
-            entryCounterLabel.Text = $"{logGridView.Rows.Count} entries";
+            entryCounterLabel.Text = $"{_logEntries.Count} entries";
         }
 
-        private void SaveData()
+        private void SaveData(List<LogEntry> entries)
         {
-            var json = JsonConvert.SerializeObject(_logEntries);
-            File.WriteAllText("knglogdb.json", json);
+            var json = JsonConvert.SerializeObject(entries);
+            File.WriteAllText(FilePath, json);
         }
 
         private void LoadData()
         {
 
-            if (File.Exists("knglogdb.json"))
+            if (File.Exists(FilePath))
             {
-                var fileContent = File.ReadAllText("knglogdb.json");
+                var fileContent = File.ReadAllText(FilePath);
                 if (fileContent.Length > 1)
                 {
                     var list = JsonConvert.DeserializeObject<List<LogEntry>>(fileContent);
@@ -117,27 +138,7 @@ namespace KngLog
                     // update the grid view
                     UpdateGridview();
                 }
-            } else SaveData();
-        }
-
-        private void logGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void logGridView_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
-        {
-            if (logGridView.SelectedCells.Count > 0)
-            {
-                int selectedrowindex = logGridView.SelectedCells[0].RowIndex;
-
-                DataGridViewRow selectedRow = logGridView.Rows[selectedrowindex];
-
-                string a = Convert.ToString(selectedRow.Cells[0].Value);
-                string b = Convert.ToString(selectedRow.Cells[1].Value);
-                System.Diagnostics.Debug.WriteLine($"A string rel {a} {b}");
-
-            }
+            } else SaveData(_logEntries);
         }
     }
 }
