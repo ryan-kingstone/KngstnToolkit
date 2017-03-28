@@ -36,7 +36,7 @@ namespace KngLog
             characterCounterLabel.Text = $"{logTextBox.Text.Length}/{MaxCharacters}";
 
             // initialize the entry counter text.
-            entryCounterLabel.Text = @"0 entries";
+            entryGroupBox.Text = @"0 entries";
 
             LoadData();
         }
@@ -79,7 +79,10 @@ namespace KngLog
         {
             EntryPanel.Controls.Clear();
 
-            foreach (var item in _logEntries)
+            var sortedEntries = _logEntries.OrderByDescending(p => p.Date);
+
+            int count = 0;
+            foreach (var item in sortedEntries)
             {
                 Panel pan = new Panel();
                 pan.Location = new Point(5, 2 + EntryPanel.Controls.Count * 110);
@@ -91,22 +94,24 @@ namespace KngLog
                 Label chb = new Label();
                 chb.Text = item.Entry;
                 chb.Width = EntryPanel.Width - 22;
-                chb.Height = 75;
-                chb.Font = new Font("Segoe UI", 8.2f);
+                chb.Height = 85;
+                chb.BackColor = Color.LightGray;
+                chb.Font = new Font("Segoe UI", 11f);
                 chb.Location = new Point(0, pan.Controls.Count * 60);
                 pan.Controls.Add(chb);
 
                 Label dateLabel = new Label();
                 dateLabel.Text = item.Date;
                 dateLabel.Width = EntryPanel.Width - 22;
-                dateLabel.Height = 12;
-                dateLabel.Font = new Font("Segoe UI", 8.2f);
+                dateLabel.Height = 15;
+                dateLabel.Font = new Font("Segoe UI", 8.6f);
+                dateLabel.ForeColor = Color.Gray;
                 dateLabel.Location = new Point(0, pan.Controls.Count * 60 + 25);
                 pan.Controls.Add(dateLabel);
             }
 
             // update the counter
-            entryCounterLabel.Text = $"{_logEntries.Count} entries";
+            entryGroupBox.Text = $"{_logEntries.Count} entries";
         }
 
         private void SaveData(List<LogEntry> entries)

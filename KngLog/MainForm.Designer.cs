@@ -31,7 +31,6 @@
             this.logTextBox = new System.Windows.Forms.TextBox();
             this.submitButton = new System.Windows.Forms.Button();
             this.characterCounterLabel = new System.Windows.Forms.Label();
-            this.entryCounterLabel = new System.Windows.Forms.Label();
             this.entryGroupBox = new System.Windows.Forms.GroupBox();
             this.EntryPanel = new System.Windows.Forms.Panel();
             this.entryGroupBox.SuspendLayout();
@@ -39,7 +38,7 @@
             // 
             // logTextBox
             // 
-            this.logTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.logTextBox.Location = new System.Drawing.Point(13, 13);
             this.logTextBox.Multiline = true;
             this.logTextBox.Name = "logTextBox";
@@ -70,15 +69,6 @@
             this.characterCounterLabel.Text = "xxx/xxx";
             this.characterCounterLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // entryCounterLabel
-            // 
-            this.entryCounterLabel.AutoSize = true;
-            this.entryCounterLabel.Location = new System.Drawing.Point(13, 157);
-            this.entryCounterLabel.Name = "entryCounterLabel";
-            this.entryCounterLabel.Size = new System.Drawing.Size(46, 13);
-            this.entryCounterLabel.TabIndex = 4;
-            this.entryCounterLabel.Text = "x entries";
-            // 
             // entryGroupBox
             // 
             this.entryGroupBox.BackColor = System.Drawing.SystemColors.Control;
@@ -105,7 +95,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(681, 477);
             this.Controls.Add(this.entryGroupBox);
-            this.Controls.Add(this.entryCounterLabel);
             this.Controls.Add(this.characterCounterLabel);
             this.Controls.Add(this.submitButton);
             this.Controls.Add(this.logTextBox);
@@ -124,7 +113,6 @@
         private System.Windows.Forms.TextBox logTextBox;
         private System.Windows.Forms.Button submitButton;
         private System.Windows.Forms.Label characterCounterLabel;
-        private System.Windows.Forms.Label entryCounterLabel;
         private System.Windows.Forms.GroupBox entryGroupBox;
         private System.Windows.Forms.Panel EntryPanel;
     }
