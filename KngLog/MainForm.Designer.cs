@@ -1,4 +1,7 @@
-﻿namespace KngLog
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace KngLog
 {
     partial class MainForm
     {
@@ -48,13 +51,15 @@
             // 
             // submitButton
             // 
+            this.submitButton.BackColor = System.Drawing.Color.DarkKhaki;
+            this.submitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.submitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.submitButton.Location = new System.Drawing.Point(577, 139);
             this.submitButton.Name = "submitButton";
             this.submitButton.Size = new System.Drawing.Size(92, 31);
             this.submitButton.TabIndex = 1;
             this.submitButton.Text = "Submit";
-            this.submitButton.UseVisualStyleBackColor = true;
+            this.submitButton.UseVisualStyleBackColor = false;
             this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
             // 
             // characterCounterLabel
@@ -83,7 +88,7 @@
             // EntryPanel
             // 
             this.EntryPanel.AutoScroll = true;
-            this.EntryPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.EntryPanel.BackColor = System.Drawing.Color.DarkKhaki;
             this.EntryPanel.Location = new System.Drawing.Point(6, 19);
             this.EntryPanel.Name = "EntryPanel";
             this.EntryPanel.Size = new System.Drawing.Size(645, 267);
@@ -93,6 +98,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(681, 477);
             this.Controls.Add(this.entryGroupBox);
             this.Controls.Add(this.characterCounterLabel);
@@ -102,6 +108,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "KngLog";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.entryGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

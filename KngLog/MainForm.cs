@@ -15,7 +15,7 @@ namespace KngLog
         public static string FilePath = "knglogdb.json";
 
         // the max character list
-        public static int MaxCharacters = 300;
+        public static int MaxCharacters = 200;
 
         private static List<LogEntry> _logEntries;
 
@@ -85,16 +85,16 @@ namespace KngLog
             foreach (var item in sortedEntries)
             {
                 Panel pan = new Panel();
-                pan.Location = new Point(5, 2 + EntryPanel.Controls.Count * 110);
+                pan.Location = new Point(0, EntryPanel.Controls.Count * 105);
                 pan.BackColor = Color.LightGray;
-                pan.Width = EntryPanel.Width - 22;
+                pan.Width = EntryPanel.Width - 17;
                 pan.Height = 100;
                 EntryPanel.Controls.Add(pan);
 
                 Label chb = new Label();
                 chb.Text = item.Entry;
                 chb.Width = EntryPanel.Width - 22;
-                chb.Height = 85;
+                chb.Height = 60;
                 chb.BackColor = Color.LightGray;
                 chb.Font = new Font("Segoe UI", 11f);
                 chb.Location = new Point(0, pan.Controls.Count * 60);
@@ -102,16 +102,41 @@ namespace KngLog
 
                 Label dateLabel = new Label();
                 dateLabel.Text = item.Date;
-                dateLabel.Width = EntryPanel.Width - 22;
-                dateLabel.Height = 15;
+                dateLabel.Width = 150;
+                dateLabel.Height = 13;
                 dateLabel.Font = new Font("Segoe UI", 8.6f);
                 dateLabel.ForeColor = Color.Gray;
-                dateLabel.Location = new Point(0, pan.Controls.Count * 60 + 25);
+                dateLabel.Location = new Point(0, pan.Controls.Count * 60);
                 pan.Controls.Add(dateLabel);
+
+                Button button = new Button();
+                button.Text = "✕";
+                button.Size = new Size(25, 25);
+                button.Location = new Point(pan.Width - 29, pan.Controls.Count * 60 - 48);
+                button.Visible = true;
+                button.FlatStyle = FlatStyle.Flat;
+                button.BackColor = Color.PaleVioletRed;
+                button.Click += Button_Click;
+                button.Tag = count;
+                pan.Controls.Add(button);
+
+                count++;
             }
 
             // update the counter
             entryGroupBox.Text = $"{_logEntries.Count} entries";
+        }
+
+        private void Button_Click(object sender, EventArgs e)
+        {
+            var button = (Control)sender;
+            var entry = _logEntries.OrderByDescending(p => p.Date).ElementAt((int)button.Tag);
+            if (_logEntries.Exists(p => p == entry))
+            {
+                _logEntries.Remove(entry);
+                UpdateGridview();
+                SaveData(_logEntries);
+            }
         }
 
         private void SaveData(List<LogEntry> entries)
@@ -139,6 +164,10 @@ namespace KngLog
                     UpdateGridview();
                 }
             } else SaveData(_logEntries);
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
         }
     }
 }
