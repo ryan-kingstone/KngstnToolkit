@@ -109,6 +109,7 @@
             this.Controls.Add(this.characterCounterLabel);
             this.Controls.Add(this.submitButton);
             this.Controls.Add(this.logTextBox);
+            this.DoubleBuffered = true;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "KngLog";

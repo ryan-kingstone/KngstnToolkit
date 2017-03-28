@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace KngLog
@@ -76,11 +77,13 @@ namespace KngLog
 
         private void UpdateGridview()
         {
+            EntryPanel.Controls.Clear();
+
             foreach (var item in _logEntries)
             {
                 Panel pan = new Panel();
                 pan.Location = new Point(5, 2 + EntryPanel.Controls.Count * 110);
-                pan.BackColor = Color.OliveDrab;
+                pan.BackColor = Color.LightGray;
                 pan.Width = EntryPanel.Width - 22;
                 pan.Height = 100;
                 EntryPanel.Controls.Add(pan);
@@ -100,14 +103,6 @@ namespace KngLog
                 dateLabel.Font = new Font("Segoe UI", 8.2f);
                 dateLabel.Location = new Point(0, pan.Controls.Count * 60 + 25);
                 pan.Controls.Add(dateLabel);
-
-                /*Button button = new Button();
-                button.Text = "DELETE";
-                button.Width = 60;
-                button.Height = 12;
-                button.Font = new Font("Segoe UI", 8.2f);
-                button.Location = new Point(50, pan.Controls.Count * 60 + 25);
-                pan.Controls.Add(button);*/
             }
 
             // update the counter
