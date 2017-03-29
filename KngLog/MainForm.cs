@@ -175,5 +175,10 @@ namespace KngLog
         private void MainForm_Load(object sender, EventArgs e)
         {
         }
+
+        private void entryGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
