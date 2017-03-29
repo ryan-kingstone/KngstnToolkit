@@ -112,7 +112,7 @@ namespace KngLog
                 dateLabel.Height = 13;
                 dateLabel.Font = new Font("Segoe UI", 8.6f);
                 dateLabel.ForeColor = Color.Gray;
-                dateLabel.Location = new Point(0, pan.Controls.Count * 60);
+                dateLabel.Location = new Point(0, pan.Controls.Count * 60 + 25);
                 pan.Controls.Add(dateLabel);
 
                 Button button = new Button();
