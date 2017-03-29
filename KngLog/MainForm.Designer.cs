@@ -88,7 +88,7 @@ namespace KngLog
             // EntryPanel
             // 
             this.EntryPanel.AutoScroll = true;
-            this.EntryPanel.BackColor = System.Drawing.Color.DarkKhaki;
+            this.EntryPanel.BackColor = System.Drawing.Color.DimGray;
             this.EntryPanel.Location = new System.Drawing.Point(6, 19);
             this.EntryPanel.Name = "EntryPanel";
             this.EntryPanel.Size = new System.Drawing.Size(645, 267);

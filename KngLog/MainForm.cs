@@ -87,7 +87,13 @@ namespace KngLog
                 Panel pan = new Panel();
                 pan.Location = new Point(0, EntryPanel.Controls.Count * 105);
                 pan.BackColor = Color.LightGray;
-                pan.Width = EntryPanel.Width - 17;
+                if(sortedEntries.Count() < 3)
+                {
+                    pan.Width = EntryPanel.Width;
+                } else
+                {
+                    pan.Width = EntryPanel.Width - 17;
+                }
                 pan.Height = 100;
                 EntryPanel.Controls.Add(pan);
 
