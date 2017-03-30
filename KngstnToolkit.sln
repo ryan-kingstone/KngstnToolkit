@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenameUtil", "RenameUtil\RenameUtil.csproj", "{A66F4F90-AC29-46B5-8C2C-1FCEFFB92062}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KngLog", "KngLog\KngLog.csproj", "{8D1EB4B0-C7E2-421B-A018-B90F80F67C82}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KngInventory", "KngInventory\KngInventory.csproj", "{593B8F0E-20A3-4309-840F-682C803FE93A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{8D1EB4B0-C7E2-421B-A018-B90F80F67C82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D1EB4B0-C7E2-421B-A018-B90F80F67C82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D1EB4B0-C7E2-421B-A018-B90F80F67C82}.Release|Any CPU.Build.0 = Release|Any CPU
-		{593B8F0E-20A3-4309-840F-682C803FE93A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{593B8F0E-20A3-4309-840F-682C803FE93A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{593B8F0E-20A3-4309-840F-682C803FE93A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{593B8F0E-20A3-4309-840F-682C803FE93A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
