@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using ExifLib;
 
 namespace RenameUtil
 {
@@ -54,9 +55,10 @@ namespace RenameUtil
 
                 foreach (var file in files)
                 {
-                    Console.WriteLine($"---------> {file}.");
                     if (File.Exists(file))
                     {
+                        Console.WriteLine($"---------> {file}.");
+
                         var extension = Path.GetExtension(file);
                         if (extension != null)
                         {
@@ -66,17 +68,26 @@ namespace RenameUtil
                             {
                                 if (originalFileName != null && !originalFileName.StartsWith("MEDIA"))
                                 {
-                                    var creationTime = File.GetCreationTime(file);
-                                    var newName = Path.GetDirectoryName(file) + "\\" +
-                                                  $"MEDIA_{creationTime.Day.ToString().PadLeft(2, '0')}-{creationTime.Month.ToString().PadLeft(2, '0')}-{creationTime.Year.ToString().PadLeft(2, '0')}_{creationTime.Hour.ToString().PadLeft(2, '0')}-{creationTime.Minute.ToString().PadLeft(2, '0')}-{RandomString(4)}{extension}";
-                                    if (!File.Exists(newName))
+                                    using (ExifReader reader = new ExifReader(file))
                                     {
-                                        File.Move(file, newName);
-                                        Console.WriteLine($"------ Renaming ({file}) to {newName}");
+                                        // Extract the tag data using the ExifTags enumeration
+                                        DateTime datePictureTaken;
+                                        if (reader.GetTagValue(ExifTags.DateTimeDigitized,
+                                                                        out datePictureTaken))
+                                        {
+                                            var newName = Path.GetDirectoryName(file) + "\\" +
+                                                          $"MEDIA_{datePictureTaken.Day.ToString().PadLeft(2, '0')}-{datePictureTaken.Month.ToString().PadLeft(2, '0')}-{datePictureTaken.Year.ToString().PadLeft(2, '0')}_{datePictureTaken.Hour.ToString().PadLeft(2, '0')}-{datePictureTaken.Minute.ToString().PadLeft(2, '0')}-{RandomString(4)}{extension}";
+                                            if (!File.Exists(newName))
+                                            {
+                                                File.Move(file, newName);
+                                                Console.WriteLine($"------ Renaming ({file}) to {newName}");
 
-                                        RenamedFileCounter++;
+                                                RenamedFileCounter++;
+                                            }
+                                            else Console.WriteLine($"File (old: {file}) {newName} exists already.");
+                                        }
                                     }
-                                    else Console.WriteLine($"File (old: {file}) {newName} exists already.");
+
                                 }
                                 else
                                 {
