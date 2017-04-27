@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenameUtil", "RenameUtil\Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KngLog", "KngLog\KngLog.csproj", "{8D1EB4B0-C7E2-421B-A018-B90F80F67C82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PastebinKeywordScraper", "PastebinKeywordScraper\PastebinKeywordScraper.csproj", "{FE0B49B2-A4DA-4721-A9ED-AC04AC9443F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8D1EB4B0-C7E2-421B-A018-B90F80F67C82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D1EB4B0-C7E2-421B-A018-B90F80F67C82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D1EB4B0-C7E2-421B-A018-B90F80F67C82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE0B49B2-A4DA-4721-A9ED-AC04AC9443F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE0B49B2-A4DA-4721-A9ED-AC04AC9443F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE0B49B2-A4DA-4721-A9ED-AC04AC9443F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE0B49B2-A4DA-4721-A9ED-AC04AC9443F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
